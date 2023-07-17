@@ -1,0 +1,99 @@
+.group {
+    /* display: inline-block;
+    width: 10vw;
+    min-height: 10vh;
+    margin-left: 2vw; */
+}
+
+.group {
+    /* width: 10vw;
+    text-align: center;
+    border:  0.1em solid #ddd;
+    border-radius: 0.5em; */
+}
+
+.group-input {
+    /* padding: 0.2em; */
+}
+
+.groups {
+    /* display: inline-block;
+    padding-left: 1vw;
+    text-align: center; */
+}
+
+.block {
+}
+
+input {
+    margin: auto;
+    width: 50%;
+}
+
+.groups-price {
+    width: 40%;
+    display: inline-block;
+    text-align: right;
+}
+
+.groups-count {
+    width: 20%;
+    display: inline-block;
+    text-align: right;
+    margin-left: 1vw;
+}
+
+.groups-price input {
+    text-align: right;
+    font-size: 1vw;
+}
+
+.groups-count input {
+    text-align: right;
+    font-size: 1vw;
+}
+
+.group {
+    text-align: center;
+    line-height: 2.5;
+    width: 15vw;
+}
+
+.top-label {
+    text-align: left;
+    padding-left: 1vw;
+    font-size: 1vw;
+}
+
+.group-top {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    background-color: rgb(89, 124, 159);
+}
+
+.group-el {
+    text-align: center;
+    line-height: 2.5;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 1px #999;
+    color: rgb(250, 246, 246);
+}
+
+.groups-del {
+    width: 3vw;
+    background-color: rgb(194, 145, 142);
+    float: right;
+    bottom: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}

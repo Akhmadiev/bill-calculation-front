@@ -1,0 +1,55 @@
+.rooms {
+}
+
+body{
+  background-color: rgb(74, 75, 117);
+  color: rgb(250, 246, 246);
+}
+
+.rooms-el {
+  font-size: 30px;
+  padding-left: 1vw;
+  font-style: italic;
+}
+
+a {
+  color: white;
+}
+
+.block {
+  display: flex;
+}
+
+.left_block {
+  margin-left: 2.5vw;
+  position: sticky;
+  left: 1vw;
+}
+
+.right_block {
+}
+
+.room-top {
+  display: flex;
+  margin-left: 2vw;
+}
+
+.home {
+  font-size: 2vw;
+  width: 3vw;
+  height: 6vh;
+  padding: 0;
+}
+
+.calculate {
+  margin-top: 1vh;
+  right: 1vw;
+  position: fixed;
+}
+
+.back {
+  height: 4vh;
+  width: 6vw;
+  margin-left: 0.5vw;
+  margin-top: 1vh; 
+}

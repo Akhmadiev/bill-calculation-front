@@ -1,0 +1,9 @@
+.new-room {
+  padding: 2%;
+  width: 20vw;
+  margin-left: 2vw;
+}
+
+.new-room button {
+  width: 6vw;
+}
