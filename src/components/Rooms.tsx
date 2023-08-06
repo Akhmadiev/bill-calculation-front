@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { QueryService } from "../services/QueryService";
 import '../css/App.css';
@@ -9,17 +9,12 @@ import NewRoom from './NewRoom';
 import { Link } from 'react-router-dom';
 
 function Rooms() {
-    const [data, setData] = useState({});
-    const roomQuery = useQuery('rooms', () => QueryService.getRooms(), {
-        onSuccess(response) {
-            setData(response.data);
-        }
-    });
+    const roomQuery = useQuery('rooms', () => QueryService.getRooms());
     if (roomQuery.isLoading) {
         return <div className='container'><div className='loading'></div></div>
     }
-
-    const roomData = data as Room[];
+    var roomQueryData = roomQuery.data as any;
+    const roomData = roomQueryData.data as Room[];
 
     return (
         <React.StrictMode>

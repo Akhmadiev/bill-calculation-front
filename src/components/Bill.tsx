@@ -21,7 +21,7 @@ function Bill() {
         <label>Чек:</label>
         <textarea id="story" name="story" rows={30} cols={100} defaultValue={bill}>
         </textarea>
-        <button onClick={() => { navigator.clipboard.writeText(bill) }}>Скопировать</button>
+        {/* <button onClick={() => { navigator.clipboard.writeText(bill) }}>Скопировать</button> */}
         
         {/* <button className="telegramBtn" onClick={() => {navigator.clipboard.writeText(bill)}}>Отправить в телегу</button> */}
     </div>);

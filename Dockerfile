@@ -1,17 +1,18 @@
 FROM node
 
+# set working directory
 WORKDIR /app
 
-COPY . .
+# install app dependencies
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
 
-RUN npm install
-
-RUN npm run build
-
-ENV NODE_ENV production
-
-ENV TEST foo
+# add app
+COPY . ./
 
 EXPOSE 3000
 
-CMD [ "npx", "serve", "build" ]
+# start app
+CMD ["npm", "start"]

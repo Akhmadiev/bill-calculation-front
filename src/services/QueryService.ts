@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Room, Group } from "../models/Entities";
 
-const API_URL = process.env.BACK_URL || 'https://localhost:7288/';
+const API_URL = process.env.BACK_URL || 'http://37.46.130.135:5000/';
 const Controller = "Bill"
 
 axios.defaults.baseURL = API_URL;
