@@ -22,11 +22,12 @@ a {
 
 .left_block {
   margin-left: 2.5vw;
-  position: sticky;
-  left: 1vw;
+  position: fixed;
+  width: 12%;
 }
 
 .right_block {
+  margin-left: 15%;
 }
 
 .room-top {

@@ -2,7 +2,8 @@ export interface Person {
     id: string,
     roomId: string,
     groupId: string,
-    name: string
+    name: string,
+    isChecked: boolean
 }
 
 export interface Group {

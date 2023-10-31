@@ -6,7 +6,7 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import Groups from './Groups';
 import { useQuery } from 'react-query';
 import { QueryService } from "../services/QueryService";
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { Group, Person } from '../models/Entities';
 import NewPerson from './NewPerson';
@@ -17,10 +17,14 @@ function Roomq() {
     const { id } = useParams();
     const [persons, setPersons] = useState({});
     const [groups, setGroups] = useState({});
-    const navigate = useNavigate();
+    const [selectedPersons, selectPerson] = useState({} as Person[]);
 
-    const mutation = useMutation(async (data: [string, string]) => {
-        await QueryService.addGroupPerson(data[0], data[1]);
+    const mutation = useMutation(async (data: [string, string[]]) => {
+        await QueryService.addGroupPersons(data[0], data[1]);
+    }, {
+        onSuccess: function () {
+            window.location.reload();
+        }
     });
 
     const calculateMutation = useMutation(async () => {
@@ -55,13 +59,13 @@ function Roomq() {
                 <NewGroup />
             <button className='btn btn-success calculate' onClick={() => calculateMutation.mutate()}>Рассчитать</button>
             </div>
-            <DragDropContext onDragEnd={(result) => onDragEnd(result, persons as Person[], groups as Group[], setGroups, mutation)}>
+            <DragDropContext onDragEnd={(result) => onDragEnd(result, selectedPersons, persons as Person[], groups as Group[], setGroups, mutation)}>
                 <div className="block">
-                <div className="left_block">
-                    <Persons {...persons as Person[]} />
-                </div>
-                <div className="right_block">
-                    <Groups {...groups as Group[]} />
+                    <div className="left_block">
+                        <Persons persons={persons} selectedPersons={selectedPersons} selectPerson={selectPerson} />
+                    </div>
+                    <div className="right_block">
+                        <Groups {...groups as Group[]} />
                     </div>
                 </div>
             </DragDropContext>
@@ -69,32 +73,50 @@ function Roomq() {
     );
 }
 
-async function onDragEnd(result: any, persons: Person[], groups: Group[], setGroups: any, mutation: any) {
+async function onDragEnd(result: any, selectedPersons: Person[], persons: Person[], groups: Group[], setGroups: any, mutation: any) {
     const { source, destination, draggableId } = result;
 
     if (!destination || source.droppableId === destination.droppableId) {
         return;
     }
 
-    const newPerson = persons.filter(x => x.id === draggableId)[0];
     const group = groups.filter(x => x.id === destination.droppableId)[0];
-
-    if (newPerson == null || group == null) {
-        return;
-    }
 
     if (group.persons == null) {
         group.persons = [];
     }
 
-    if (group.persons.filter(x => x.id === draggableId).length > 0) {
+    const groupPersons = group.persons.map(x => x.id);
+    selectedPersons = selectedPersons.filter(x => !groupPersons.includes(x.id));
+    var selectedPersonIds = selectedPersons.map(x => x.id);
+
+    if (selectedPersonIds.length === 0 || group === null) {
+        window.location.reload();
         return;
     }
+    // group.persons.push(...selectedPersons);
+    // setGroups(groups);
 
-    group.persons.push(newPerson);
-    setGroups(groups);
+    await mutation.mutate([destination.droppableId, selectedPersonIds]);
 
-    await mutation.mutate([destination.droppableId, draggableId]);
+    // const newPerson = persons.filter(x => x.id === draggableId)[0];
+
+    // if (newPerson == null || group == null) {
+    //     return;
+    // }
+
+    // if (group.persons == null) {
+    //     group.persons = [];
+    // }
+
+    // if (group.persons.filter(x => x.id === draggableId).length > 0) {
+    //     return;
+    // }
+
+    // group.persons.push(newPerson);
+    // setGroups(groups);
+
+    // await mutation.mutate([destination.droppableId, draggableId]);
 }
 
 export default Roomq;

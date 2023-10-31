@@ -19,12 +19,21 @@ function Groups(groups: Group[]) {
         window.location.reload();
     });
 
+    const copyGroupMutation = useMutation(async (groupId: string) => {
+        await QueryService.copyGroup(groupId);
+        window.location.reload();
+    });
+
     const changeGroupCountMutation = useMutation(async (data: [string, number]) => {
         await QueryService.changeGroupCount(data[0], data[1]);
     });
 
     const changePriceCountMutation = useMutation(async (data: [string, number]) => {
         await QueryService.changeGroupPrice(data[0], data[1]);
+    });
+
+    const changeGroupNameMutation = useMutation(async (data: [string, string]) => {
+        await QueryService.changeGroupName(data[0], data[1]);
     });
 
     const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
@@ -50,18 +59,29 @@ function Groups(groups: Group[]) {
         changePriceCountMutation.mutate([groupId, value]);
     }
 
+    const onGroupNameChange = function (evt: any, groupId: string) {
+        var value = evt.target.value;
+        changeGroupNameMutation.mutate([groupId, value]);
+    }
+
     const onFocus = function (evt: any) {
         evt.target.select();
     }
 
     return (
-        <div className='block'>
+        <div className='block group-block'>
             {groupData.map((group) => <div className='group' key={group.id}>
                 <div className="group-top">
-                    <label className='top-label'>{group.name}
-                    <button className='groups-del' onClick={function () { deleteGroupMutation.mutate(group.id) }}>Del</button>
-                        
-                    </label>
+                    <div className="top-label">
+                        <input
+                            onChange={(evt) => onGroupNameChange(evt, group.id)}
+                            defaultValue={group.name}
+                            onFocus={onFocus}
+                            placeholder='Group name'
+                            className="form-control" />
+                            <button className='groups-del' onClick={function () { deleteGroupMutation.mutate(group.id) }}>Del</button>
+                            <button className='groups-copy' onClick={function () { copyGroupMutation.mutate(group.id) }}>Copy</button>
+                    </div>
                     <div className="groups-price">
                         <input
                             onChange={(evt) => onPriceChange(evt, group.id)}
@@ -105,7 +125,7 @@ function Groups(groups: Group[]) {
                                                 provided.draggableProps.style
                                             )}>
                                             {item.name}
-                                            <button className='groups-del' onClick={function () { deleteGroupPersonMutation.mutate([group.id, item.id]) }}>Del</button>
+                                            <button className='groups-del-el' onClick={function () { deleteGroupPersonMutation.mutate([group.id, item.id]) }}>Del</button>
                                         </div>
                                     )}
                                 </Draggable>

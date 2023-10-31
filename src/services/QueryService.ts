@@ -21,17 +21,30 @@ export const QueryService = {
     async addGroupPerson(groupId: string, personId: string) {
         await axios.post(`/${Controller}/addGroupPerson?groupId=${groupId}&personId=${personId}`);
     },
+    async addGroupPersons(groupId: string, personIds: string[]) {
+        await axios.post(`/${Controller}/addGroupPersons?groupId=${groupId}`, personIds, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    },
     async deleteGroupPerson(groupId: string, personId: string) {
         await axios.post(`/${Controller}/deleteGroupPerson?groupId=${groupId}&personId=${personId}`);
     },
     async deleteGroup(groupId: string) {
         await axios.post(`/${Controller}/deleteGroup?groupId=${groupId}`);
     },
+    async copyGroup(groupId: string) {
+        await axios.post(`/${Controller}/copyGroup?groupId=${groupId}`);
+    },
     async changeGroupCount(groupId: string, count: number) {
         await axios.post(`/${Controller}/changeGroupCount?groupId=${groupId}&count=${count}`)
     },
     async changeGroupPrice(groupId: string, price: number) {
         await axios.post(`/${Controller}/changeGroupPrice?groupId=${groupId}&price=${price}`)
+    },
+    async changeGroupName(groupId: string, name: string) {
+        await axios.post(`/${Controller}/changeGroupName?groupId=${groupId}&name=${name}`)
     },
     async getRooms() {
 		return await axios.get<Room[]>(`/${Controller}/GetRooms`)
@@ -47,5 +60,12 @@ export const QueryService = {
     },
     async calculate(roomId: string) {
         return await axios.get<string>(`${Controller}/Calculate?roomId=${roomId}`)
+    },
+    async sendToTelegram(text: string) {
+        await axios.post(`${Controller}/sendToTelegram`, text, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
     }
 }

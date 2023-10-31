@@ -33,6 +33,7 @@ function NewPerson() {
                     className="form-control"
                     placeholder="Имя должника"
                     aria-label="Имя должника"
+                    maxLength={10}
                     aria-describedby="basic-addon2" />
                 <div className="input-group-append">
                     <button
